@@ -5,8 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "nodemon babel-node ./bin/www",
-    "lint:js": "eslint . --ext .js",
-    "lint:js:fix": "npm run lint:js -- --fix",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "npm run lint:js -- --fix",
+    "prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore",
     "test": "mocha ./test/*.js",
     "prepare": "husky install"
   },

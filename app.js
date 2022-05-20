@@ -8,8 +8,6 @@ require('dotenv').config()
 
 const indexRouter = require('./routes/index')
 
-const port = process.env.PORT || 3000
-
 const app = express()
 app.use(cors())
 
@@ -39,11 +37,6 @@ app.use((err, req, res) => {
   // render the error page
   res.status(err.status || 500)
   res.render('error')
-})
-
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Servidor funcionando en el puerto ${port}`)
 })
 
 module.exports = app

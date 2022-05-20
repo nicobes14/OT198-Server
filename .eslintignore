@@ -1,5 +1,6 @@
 node_modules/**
 package-lock.json
+package.json
 .git
 database/
 seeders/
@@ -11,3 +12,4 @@ bin/
 dist/
 *.test.js
 *.spec.js
+.env

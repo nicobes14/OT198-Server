@@ -18,7 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     content: DataTypes.STRING
   }, {
-    sequelize, paranoid: true,
+    sequelize, 
+    timestamp: true, 
+    paranoid: true,
     modelName: 'Activities',
   });
   return Activities;

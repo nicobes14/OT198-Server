@@ -27,4 +27,3 @@ const ShowAll = async (req, res, next) => {
 module.exports = {
     ShowAll,
 }
-

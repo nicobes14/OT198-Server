@@ -2,13 +2,13 @@ const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
 const db = require('../database/models')
 
-const { Activities } = db
+const { Activity } = db
 
 //find all activities
 
 const ShowAll = async (req, res, next) => {
     try {
-        const activities = await Activities.findAll()
+        const activities = await Activity.findAll()
         endpointResponse({
         res,
         code: 200,

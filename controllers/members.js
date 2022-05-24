@@ -1,14 +1,15 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
+const { catchAsync } = require('../helpers/catchAsync')
 
 const db = require('../database/models')
 
-const { Members } = db
+const { Member } = db
 
 module.exports = {
-  list: async (req, res, next) => {
+  list: catchAsync(async (req, res, next) => {
     try {
-      const members = await Members.findAll()
+      const members = await Member.findAll()
       endpointResponse({
         res,
         code: 200,
@@ -22,5 +23,5 @@ module.exports = {
       )
       next(httpError)
     }
-  },
+  }),
 }

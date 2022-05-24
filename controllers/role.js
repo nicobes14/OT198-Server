@@ -1,10 +1,10 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
-const Roles = require('../database/models/roles')
+const Role = require('../database/models/role')
 
 const list = async (req, res, next) => {
   try {
-    const roles = await Roles.findAll()
+    const roles = await Role.findAll()
     endpointResponse({
       res,
       code: 200,

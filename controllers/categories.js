@@ -9,12 +9,13 @@ const list = async (req, res, next) => {
       res,
       code: 200,
       status: true,
-      message: categories,
+      message: 'Categories found',
+      body: categories,
     })
-  } catch (e) {
+  } catch (error) {
     const httpError = createHttpError(
-      e.statusCode,
-      `[Error retrieving index] - [index - GET]: ${e.message}`,
+      error.statusCode,
+      `[Error retrieving categories] - [categories - GET]: ${error.message}`,
     )
     next(httpError)
   }

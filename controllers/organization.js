@@ -1,27 +1,26 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
+const services = require('../services/organization')
 
-const db = require('../database/models')
-
-const { Organization } = db
+const { listOrganization } = services
 
 // find all Organization function
 module.exports = {
   list: catchAsync(async (req, res, next) => {
     try {
-      const organizations = await Organization.findAll()
+      const publicData = await listOrganization()
       endpointResponse({
         res,
         code: 200,
         status: true,
-        message: 'Organizations retrieved successfully',
-        body: organizations,
+        message: 'Organizations public data retrieved successfully',
+        body: publicData,
       })
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
-        `[Error retrieving organization] - [organization - list]: ${error.message}`,
+        `[Error retrieving organization public data] - [organization - listPublic]: ${error.message}`,
       )
       next(httpError)
     }

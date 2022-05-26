@@ -1,6 +1,6 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
-const { listCategories } = require('../services/categories')
+const { listCategories, listCategoryById } = require('../services/categories')
 
 const list = async (req, res, next) => {
   try {
@@ -20,6 +20,24 @@ const list = async (req, res, next) => {
   }
 }
 
+const listCategory = async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const category = await listCategoryById(id)
+    if (!category) throw next(createHttpError(404, `Category with id ${id} not found`))
+    endpointResponse({
+      res,
+      code: 200,
+      status: true,
+      message: 'Category found',
+      body: category,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   list,
+  listCategory,
 }

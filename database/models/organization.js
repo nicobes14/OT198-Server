@@ -10,8 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-    }
+      Organization.hasMany(models.Slide,{
+        foreignKey:'organizationId'
+        })
+      }
   };
   Organization.init({
     name: DataTypes.STRING,

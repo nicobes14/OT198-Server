@@ -20,6 +20,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      type:{
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       categoryId: {
         type: Sequelize.INTEGER,
         references: {
@@ -36,7 +40,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       deletedAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       }
     });

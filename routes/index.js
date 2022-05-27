@@ -4,6 +4,7 @@ const pingRouter = require('./ping')
 const categoriesRouter = require('./categories')
 const newsRouter = require('./news')
 const organizationRouter = require('./organization')
+const newRouter = require('./news')
 const slidesRouter = require('./slide')
 
 const router = express.Router()
@@ -20,5 +21,8 @@ router.use('/news', newsRouter)
 router.use('/organization', organizationRouter)
 // slides routes
 router.use('/slides', slidesRouter)
+
+// new routes
+router.use('/new', newRouter)
 
 module.exports = router

@@ -11,6 +11,17 @@ const getNewById = async (id) => {
   }
 }
 
+const createNew = async (body) => {
+  try {
+    body.type = 'news'
+    const newCategory = await New.create(body)
+    return newCategory
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 module.exports = {
   getNewById,
+  createNew,
 }

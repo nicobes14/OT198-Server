@@ -28,6 +28,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      facebookUrl:{
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      instagramUrl:{
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      linkedinUrl:{
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       welcomeText: {
         allowNull: false,
         type: Sequelize.TEXT

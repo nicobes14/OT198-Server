@@ -1,24 +1,30 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
-const listSlide = require('../services/slide')
+const { catchAsync } = require('../helpers/catchAsync')
+const services = require('../services/slide')
+
+const { listSlide } = services
 
 // find all Slide function
 
-const list = async (req, res, next) => {
+const list = catchAsync(async (req, res, next) => {
   try {
-    const slide = await listSlide()
+    const publicData = await listSlide()
     endpointResponse({
       res,
       code: 200,
       status: true,
-      message: 'slide found',
-      body: slide,
+      message: 'Slides public data retrieved successfully',
+      body: publicData,
     })
   } catch (error) {
-    const httpError = createHttpError(error.statuscode, `[Error retrieving slide] - [slide - GET]: ${error.message}`)
+    const httpError = createHttpError(
+      error.statusCode,
+      `[Error retrieving slide public data] - [slide - listPublic]: ${error.message}`,
+    )
     next(httpError)
   }
-}
+})
 
 module.exports = {
   list,

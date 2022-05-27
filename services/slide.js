@@ -4,10 +4,9 @@ const { Slide } = db
 
 const listSlide = async () => {
   try {
-    const slides = await Slide.findAll({ attributes: ['imageURL', 'order'] })
-    return slides
+    return await Slide.findAll({ attributes: ['imageURL', 'order'] })
   } catch (error) {
-    return (error)
+    throw new Error(error)
   }
 }
 

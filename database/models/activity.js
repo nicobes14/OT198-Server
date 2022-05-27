@@ -19,9 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.STRING
   }, {
     sequelize, 
-    timestamps: true,
-    paranoid: true,
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
     modelName: 'Activity',
+    paranoid: true,
+    timestamps:true,
   });
   return Activity;
 };

@@ -20,7 +20,17 @@ const listCategories = async () => {
   }
 }
 
+const createCategory = async (category) => {
+  try {
+    const newCategory = await Category.create(category)
+    return newCategory
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 module.exports = {
   listCategories,
   listCategoryById,
+  createCategory,
 }

@@ -1,9 +1,11 @@
 const router = require('express').Router()
-const userSchema = require('../schemas/user')
+const { userRegisterSchema, userLoginSchema } = require('../schemas/user')
 const { validateSchema } = require('../middlewares/validateErrors')
-const { post } = require('../controllers/user')
+const { post, login } = require('../controllers/user')
 
 // register new user
-router.post('/register', validateSchema(userSchema), post)
+router.post('/register', validateSchema(userRegisterSchema), post)
 
+// login user
+router.post('/login', validateSchema(userLoginSchema), login)
 module.exports = router

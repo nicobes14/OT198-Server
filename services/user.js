@@ -1,22 +1,42 @@
 const bcrypt = require('bcrypt')
-const db = require('../database/models')
-
-const { User } = db
-
-const createUser = async (data) => {
-  const {
-    firstName, lastName, email, password,
-  } = data
-  try {
-    const user = await User.create({
-      firstName, lastName, email, password: bcrypt.hashSync(password, 12),
-    })
-    return user
-  } catch (error) {
-    throw new Error(error)
-  }
-}
+const { User } = require('../database/models')
 
 module.exports = {
-  createUser,
+  createUser: async (data) => {
+    const {
+      firstName, lastName, email, password,
+    } = data
+    try {
+      const user = await User.create({
+        firstName,
+        lastName,
+        email,
+        password: bcrypt.hashSync(password, 12),
+      })
+      return user
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  getUserWithEmail: async ({ email, password }) => {
+    try {
+      const user = await User.findOne({ where: { email } })
+      if (!user || !bcrypt.compareSync(password, user.password)) {
+        return {
+          code: 401,
+          status: false,
+          message: 'Invalid credentials',
+          body: { ok: false },
+        }
+      }
+      return {
+        code: 200,
+        status: true,
+        message: 'User logged in',
+        body: user,
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
 }

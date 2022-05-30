@@ -10,6 +10,15 @@ const listSlide = async () => {
   }
 }
 
+const listSlideById = async (id) => {
+  try {
+    const slide = await Slide.findByPk(id)
+    return slide
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 module.exports = {
-  listSlide,
+  listSlide, listSlideById,
 }

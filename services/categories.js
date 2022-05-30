@@ -6,6 +6,13 @@ const listCategoryById = async (id) => {
   try {
     const category = await Category.findByPk(id)
     return category
+      ? {
+        code: 200,
+        status: true,
+        message: 'Category found',
+        body: category,
+      }
+      : { code: 404, status: false, message: `Category with id ${id} not found` }
   } catch (error) {
     throw new Error(error)
   }

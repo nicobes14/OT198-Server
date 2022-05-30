@@ -29,14 +29,10 @@ const list = async (req, res, next) => {
 const listCategory = async (req, res, next) => {
   const { id } = req.params
   try {
-    const category = await listCategoryById(id)
-    if (!category) throw next(createHttpError(404, `Category with id ${id} not found`))
+    const response = await listCategoryById(id)
     endpointResponse({
       res,
-      code: 200,
-      status: true,
-      message: 'Category found',
-      body: category,
+      ...response,
     })
   } catch (error) {
     const httpError = createHttpError(

@@ -39,6 +39,34 @@ module.exports = {
       throw new Error(error)
     }
   },
+  updateUser: async (req) => {
+    const {
+      firstName, lastName, email, password,
+    } = req.body
+    const idUser = req.params.id
+    try {
+      const userExist = await User.findOne({ where: { id: idUser } })
+      if (!userExist) {
+        return {
+          code: 404,
+          status: false,
+          message: 'User not found',
+          body: { ok: false },
+        }
+      }
+      const result = await User.update({
+        firstName,
+        lastName,
+        email,
+        password: bcrypt.hashSync(password, 12),
+      }, {
+        where: { id: idUser },
+      })
+      return result
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
   deleteUser: async (id) => {
     try {
       const user = await User.destroy({

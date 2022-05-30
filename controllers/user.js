@@ -1,6 +1,8 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
-const { createUser, getUserWithEmail, deleteUser } = require('../services/user')
+const {
+  createUser, getUserWithEmail, deleteUser, updateUser,
+} = require('../services/user')
 
 module.exports = {
   post: async (req, res, next) => {
@@ -38,6 +40,24 @@ module.exports = {
       const httpError = createHttpError(
         error.statusCode,
         `[Error logging in user] - [users - tryLogin]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  },
+  put: async (req, res, next) => {
+    try {
+      const user = await updateUser(req)
+      endpointResponse({
+        res,
+        code: 200,
+        status: true,
+        message: 'User updated',
+        body: user,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error updating user] - [users - PUT]: ${error.message}`,
       )
       next(httpError)
     }

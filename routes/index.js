@@ -36,5 +36,7 @@ router.use('/new', newRouter)
 router.use('/users', userRouter)
 // activity routes
 router.use('/activities', activitiesRouter)
+// user routes
+router.use('/users', userRouter)
 
 module.exports = router

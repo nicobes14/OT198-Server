@@ -29,6 +29,8 @@ router.use('/slides', slidesRouter)
 
 // new routes
 router.use('/new', newRouter)
+// user routes
+router.use('/users', userRouter)
 // activity routes
 router.use('/activities', activitiesRouter)
 // user routes

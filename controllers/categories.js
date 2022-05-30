@@ -1,6 +1,11 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
-const { listCategories, listCategoryById, createCategory } = require('../services/categories')
+const {
+  listCategories,
+  listCategoryById,
+  createCategory,
+  deleteCategory,
+} = require('../services/categories')
 
 const list = async (req, res, next) => {
   try {
@@ -62,8 +67,28 @@ const post = async (req, res, next) => {
   }
 }
 
+const destroy = async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const { code, status, message } = await deleteCategory(id)
+    endpointResponse({
+      res,
+      code,
+      status,
+      message,
+    })
+  } catch (error) {
+    const httpError = createHttpError(
+      error.statusCode,
+      `[Error with database] - [delete Category - DELETE]: ${error.message}`,
+    )
+    next(httpError)
+  }
+}
+
 module.exports = {
   list,
   listCategory,
   post,
+  destroy,
 }

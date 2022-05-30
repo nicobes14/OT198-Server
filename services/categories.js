@@ -29,8 +29,22 @@ const createCategory = async (category) => {
   }
 }
 
+const deleteCategory = async (id) => {
+  try {
+    const user = await Category.destroy({
+      where: { id },
+    })
+    return user === 1
+      ? { code: 200, status: true, message: 'Category deleted' }
+      : { code: 404, status: false, message: `Category with id ${id} not found` }
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 module.exports = {
   listCategories,
   listCategoryById,
   createCategory,
+  deleteCategory,
 }

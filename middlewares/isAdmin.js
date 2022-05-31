@@ -9,7 +9,8 @@ module.exports = {
         status: true,
         message: 'Not allowed',
       })
+    } else {
+      next()
     }
-    next()
   },
 }

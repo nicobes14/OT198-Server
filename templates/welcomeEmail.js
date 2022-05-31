@@ -1,4 +1,4 @@
-const html = `<!doctype html>
+exports.html = (title, emailText, contactInfo) => `<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -298,9 +298,9 @@ const html = `<!doctype html>
                       <div
                         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;">
                         <p style="text-align: center;"><span
-                            style="font-size: 24px;"><strong>T&iacute;tulo</strong></span></p>
+                            style="font-size: 24px;"><strong>${title}</strong></span></p>
                         <p style="text-align: center;">&nbsp;</p>
-                        <p style="text-align: center;"><span style="font-size: 16px;">Texto del email</span></p>
+                        <p style="text-align: center;"><span style="font-size: 16px;">${emailText}</span></p>
                       </div>
 
                     </td>
@@ -325,7 +325,7 @@ const html = `<!doctype html>
 
                       <div
                         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;">
-                        <p style="text-align: center;">Datos de contacto de ONG</p>
+                        <p style="text-align: center;">${contactInfo}</p>
                       </div>
 
                     </td>
@@ -405,12 +405,3 @@ const html = `<!doctype html>
 </body>
 
 </html>`
-
-module.exports = {
-  templateEmail: (to, from, subject = 'Welcome! Thanks for you for subscribe') => ({
-    to,
-    from,
-    subject,
-    html,
-  }),
-}

@@ -1,10 +1,34 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
 const {
-  createUser, getUserWithEmail, deleteUser, updateUser,
+  createUser,
+  getUserWithEmail,
+  deleteUser,
+  updateUser,
+  getAllUsers,
 } = require('../services/user')
 
 module.exports = {
+  list: async (req, res, next) => {
+    try {
+      const {
+        code, status, message, body,
+      } = await getAllUsers()
+      endpointResponse({
+        res,
+        code,
+        status,
+        message,
+        body,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error getting all users] - [users - GET]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  },
   post: async (req, res, next) => {
     try {
       const user = await createUser(req.body)

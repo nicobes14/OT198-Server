@@ -27,6 +27,19 @@ const listCategories = async () => {
   }
 }
 
+const upDateCategory = async (categoryToEdit, id) => {
+  try {
+    const editCategory = await Category.update(categoryToEdit, {
+      where: { id },
+    })
+    return editCategory[0] === 1
+      ? { code: 200, status: true, message: 'Category edited' }
+      : { code: 404, status: false, message: `Category ${id} not found` }
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const createCategory = async (category) => {
   try {
     const newCategory = await Category.create(category)
@@ -52,6 +65,7 @@ const deleteCategory = async (id) => {
 module.exports = {
   listCategories,
   listCategoryById,
+  upDateCategory,
   createCategory,
   deleteCategory,
 }

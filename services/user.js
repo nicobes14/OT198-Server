@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const authConfig = require('../config/auth')
 const { User } = require('../database/models')
 
 module.exports = {
@@ -13,7 +15,10 @@ module.exports = {
         email,
         password: bcrypt.hashSync(password, 12),
       })
-      return user
+      const token = jwt.sign({ user }, authConfig.secret, {
+        expiresIn: authConfig.expires,
+      })
+      return { user, token }
     } catch (error) {
       throw new Error(error)
     }
@@ -44,11 +49,14 @@ module.exports = {
           body: { ok: false },
         }
       }
+      const token = jwt.sign({ user }, authConfig.secret, {
+        expiresIn: authConfig.expires,
+      })
       return {
         code: 200,
         status: true,
         message: 'User logged in',
-        body: user,
+        body: { user, token },
       }
     } catch (error) {
       throw new Error(error)

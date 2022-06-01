@@ -4,7 +4,7 @@ const authConfig = require('../config/auth')
 const { endpointResponse } = require('../helpers/success')
 
 module.exports = {
-  validateToken: (token) => (req, res, next) => {
+  validateToken: (token, req, res, next) => {
     jwt.verify(token, authConfig.secret, async (err, decoded) => {
       if (err) {
         endpointResponse({
@@ -14,7 +14,7 @@ module.exports = {
           message: 'Token not decoded.',
         })
       } else {
-        const user = await User.findByPk(decoded.user.idUser)
+        const user = await User.findByPk(decoded.user.id)
         req.user = user
         next()
       }

@@ -19,6 +19,6 @@ router.post('/', validateSchema(categorySchema), post)
 router.delete('/:id', destroy)
 
 // edit category
-router.put('/:id', update)
+router.put('/:id', validateSchema(categorySchema), update)
 
 module.exports = router

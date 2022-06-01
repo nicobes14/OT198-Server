@@ -1,6 +1,7 @@
 const sgMail = require('@sendgrid/mail')
 const { html } = require('../templates/welcomeEmail')
 
+// todo - insertar los datos de la organizacion en el html
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const sendWelcomeEmail = async (email) => {
   try {

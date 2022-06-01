@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const authConfig = require('../config/auth')
 const { User } = require('../database/models')
+const { sendWelcomeEmail } = require('./sendgrid')
 
 module.exports = {
   createUser: async (data) => {
@@ -9,12 +10,14 @@ module.exports = {
       firstName, lastName, email, password,
     } = data
     try {
+      // todo - change this to find or create to return better error messages
       const user = await User.create({
         firstName,
         lastName,
         email,
         password: bcrypt.hashSync(password, 12),
       })
+      await sendWelcomeEmail(email)
       const token = jwt.sign({ user }, authConfig.secret, {
         expiresIn: authConfig.expires,
       })

@@ -12,7 +12,6 @@ const userRouter = require('./user')
 const testimonialRouter = require('./testimonial')
 const contactsRouter = require('./contacts')
 
-
 const router = express.Router()
 
 // Middlewares

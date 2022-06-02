@@ -104,4 +104,22 @@ module.exports = {
       next(httpError)
     }
   },
+  userDataByToken: async (req, res, next) => {
+    try {
+      const { user } = req
+      endpointResponse({
+        res,
+        code: 200,
+        status: true,
+        message: 'User retrieved successfully',
+        body: user,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving user authenticated] - [userDataByToken - GET]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  },
 }

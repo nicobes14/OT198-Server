@@ -1,28 +1,15 @@
 const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
-const db = require('../database/models')
-
-const { Testimonial } = db
-
-// find all testimonials function
-const showAll = async (req, res, next) => {
-  try {
-    const testimonials = await Testimonial.findAll()
-    endpointResponse({
-      res,
-      code: 200,
-      status: true,
-      message: testimonials,
-    })
-  } catch (err) {
-    const httpError = createHttpError(
-      err.statusCode,
-      `Error showing all testimonials: ${err.message}`,
-    )
-    next(httpError)
-  }
-}
+const { createTestimonial } = require('../services/testimonial')
 
 module.exports = {
-  showAll,
+  post: async (req, res, next) => {
+    try {
+      const { name, content, image } = req.body
+      const response = await createTestimonial({ name, content, image })
+      return endpointResponse({ res, ...response })
+    } catch (error) {
+      return next(createHttpError(500, error))
+    }
+  },
 }

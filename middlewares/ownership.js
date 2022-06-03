@@ -5,7 +5,7 @@ const { catchAsync } = require('../helpers/catchAsync')
 
 module.exports = {
   ownershipValidate: catchAsync(async (req, res, next) => {
-    const user = await decodeToken(req)
+    const user = decodeToken(req)
     if (user.roleId === 1 || user.id === +req.params.id) {
       next()
     } else {

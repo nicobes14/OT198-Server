@@ -21,7 +21,7 @@ module.exports = {
       })
       if (!created) throw new ApiError(409, 'Email already exists')
       await sendWelcomeEmail(email)
-      const token = await generateToken(user.dataValues)
+      const token = generateToken(user.dataValues)
       return { user, token }
     } catch (error) {
       throw new Error(error)
@@ -53,7 +53,7 @@ module.exports = {
           body: { ok: false },
         }
       }
-      const token = await generateToken(user.dataValues)
+      const token = generateToken(user.dataValues)
       return {
         code: 200,
         status: true,

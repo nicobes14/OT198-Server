@@ -5,7 +5,7 @@ const { decodeToken } = require('../services/jwt')
 
 module.exports = {
   isAdmin: catchAsync(async (req, res, next) => {
-    const user = await decodeToken(req)
+    const user = decodeToken(req)
     if (user.roleId !== 1) {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not an admin')
     } else {

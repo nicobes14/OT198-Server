@@ -8,6 +8,6 @@ module.exports = {
     if (!req.headers.authorization) {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'No authorization header')
     }
-    if (await validateToken(req)) next()
+    if (validateToken(req)) next()
   }),
 }

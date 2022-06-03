@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const { User } = require('../database/models')
 const { sendWelcomeEmail } = require('./sendgrid')
 const ApiError = require('../helpers/ApiError')
-const { generateToken } = require('./jwt')
+const { generateToken } = require('../middlewares/jwt')
 
 module.exports = {
   createUser: async (data) => {

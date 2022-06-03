@@ -1,5 +1,5 @@
 const ApiError = require('../helpers/ApiError')
-const { decodeToken } = require('../services/jwt')
+const { decodeToken } = require('./jwt')
 const httpStatus = require('../helpers/httpStatus')
 const { catchAsync } = require('../helpers/catchAsync')
 

@@ -1,9 +1,9 @@
 class ApiError extends Error {
-   /**
-   *  Create a Api error
-   * @param {number} statusCode - HTTP status code of error
-   * @param {string} message - Error message
-   */
+  /**
+  *  Create a Api error
+  * @param {number} statusCode - HTTP status code of error
+  * @param {string} message - Error message
+  */
   constructor(statusCode, message, status = false, isOperational = true, stack = '') {
     super(message)
     this.statusCode = statusCode

@@ -1,5 +1,5 @@
 class ApiError extends Error {
-   /**
+  /**
    *  Create a Api error
    * @param {number} statusCode - HTTP status code of error
    * @param {string} message - Error message

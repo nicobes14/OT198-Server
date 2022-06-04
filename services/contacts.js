@@ -15,4 +15,12 @@ module.exports = {
       throw new Error(error)
     }
   },
+  createContact: async (body) => {
+    try {
+      const newContact = await Contact.create(body)
+      return newContact
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
 }

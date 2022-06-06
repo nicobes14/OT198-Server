@@ -5,7 +5,13 @@ const errorConverter = (err, req, res, next) => {
   let error = err
   if (!(error instanceof ApiError)) {
     const statusCode = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR
-    const message = error.statusCode === httpStatus.NOT_FOUND ? 'Not Found' : 'Internal server error' // para no mostrar informacion de la base de datos (puede mejorarse)
+    let message
+    if (process.env.NODE_ENV === 'development') {
+      message = error.message || 'Internal server error'
+    } else {
+      message = error.statusCode === httpStatus.NOT_FOUND ? 'Not Found' : 'Internal server error'
+    }
+
     error = new ApiError(statusCode, message, false)
   }
   next(error)

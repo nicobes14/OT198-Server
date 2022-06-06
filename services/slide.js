@@ -56,4 +56,14 @@ module.exports = {
     const updatedSlide = await slide.update(data)
     return updatedSlide.dataValues
   },
+  deleteSlide: async (id) => {
+    try {
+      const slide = await Slide.destroy(id)
+      if (!slide) throw new ApiError(httpStatus.NOT_FOUND, `Slide with id ${id} not found`)
+      await slide.destroy()
+      return true
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
 }

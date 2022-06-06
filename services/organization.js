@@ -5,7 +5,17 @@ const { Organization } = db
 module.exports = {
   listOrganization: async () => {
     try {
-      return await Organization.findAll({ attributes: ['name', 'image', 'phone', 'address'] })
+      return await Organization.findAll({
+        attributes: [
+          'name',
+          'image',
+          'phone',
+          'address',
+          'facebookUrl',
+          'instagramUrl',
+          'linkedinUrl',
+        ],
+      })
     } catch (error) {
       throw new Error(error)
     }

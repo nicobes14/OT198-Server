@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator')
 const util = require('util')
 const fs = require('fs')
-const ApiError = require('../helpers/ApiError')
+const httpStatus = require('../helpers/httpStatus')
 const { catchAsync } = require('../helpers/catchAsync')
 
 const unlinkFile = util.promisify(fs.unlink)
@@ -13,7 +13,11 @@ module.exports = {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       if (req.file) await unlinkFile(req.file.path)
-      throw new ApiError(400, errors.errors.map((error) => error.msg).join(', '))
+      return res.status(httpStatus.BAD_REQUEST).json({
+        code: httpStatus.BAD_REQUEST,
+        status: false,
+        errors: errors.array(),
+      })
     }
     return next()
   }),

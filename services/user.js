@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const authConfig = require('../config/auth')
 const { User } = require('../database/models')
 const { sendWelcomeEmail } = require('./sendgrid')
+const ApiError = require('../helpers/ApiError')
+const { generateToken } = require('../middlewares/jwt')
 
 module.exports = {
   createUser: async (data) => {
@@ -10,17 +10,18 @@ module.exports = {
       firstName, lastName, email, password,
     } = data
     try {
-      // todo - change this to find or create to return better error messages
-      const user = await User.create({
-        firstName,
-        lastName,
-        email,
-        password: bcrypt.hashSync(password, 12),
+      const [user, created] = await User.findOrCreate({
+        where: { email },
+        defaults: {
+          firstName,
+          lastName,
+          email,
+          password: bcrypt.hashSync(password, 12),
+        },
       })
+      if (!created) throw new ApiError(409, 'Email already exists')
       await sendWelcomeEmail(email)
-      const token = jwt.sign({ user }, authConfig.secret, {
-        expiresIn: authConfig.expires,
-      })
+      const token = generateToken(user.dataValues)
       return { user, token }
     } catch (error) {
       throw new Error(error)
@@ -52,9 +53,7 @@ module.exports = {
           body: { ok: false },
         }
       }
-      const token = jwt.sign({ user }, authConfig.secret, {
-        expiresIn: authConfig.expires,
-      })
+      const token = generateToken(user.dataValues)
       return {
         code: 200,
         status: true,

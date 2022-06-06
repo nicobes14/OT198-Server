@@ -1,20 +1,15 @@
-const jwt = require('jsonwebtoken')
-const authConfig = require('../config/auth')
-const { endpointResponse } = require('../helpers/success')
+const ApiError = require('../helpers/ApiError')
+const { decodeToken } = require('./jwt')
+const httpStatus = require('../helpers/httpStatus')
+const { catchAsync } = require('../helpers/catchAsync')
 
 module.exports = {
-  ownershipValidate: async (req, res, next) => {
-    const token = req.header('authorization').split(' ')[1]
-    const { user } = jwt.verify(token, authConfig.secret)
+  ownershipValidate: catchAsync(async (req, res, next) => {
+    const user = decodeToken(req)
     if (user.roleId === 1 || user.id === +req.params.id) {
       next()
     } else {
-      endpointResponse({
-        res,
-        code: 403,
-        status: false,
-        message: 'Forbidden',
-      })
+      throw new ApiError(httpStatus.FORBIDDEN, 'You are not allowed to do this')
     }
-  },
+  }),
 }

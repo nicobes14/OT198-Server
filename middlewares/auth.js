@@ -1,27 +1,13 @@
-const createHttpError = require('http-errors')
+const httpStatus = require('../helpers/httpStatus')
 const { validateToken } = require('./jwt')
-const { endpointResponse } = require('../helpers/success')
+const ApiError = require('../helpers/ApiError')
+const { catchAsync } = require('../helpers/catchAsync')
 
 module.exports = {
-  auth: (req, res, next) => {
-    try {
-      if (!req.headers.authorization) {
-        endpointResponse({
-          res,
-          code: 403,
-          status: true,
-          message: 'Access not authorized.',
-        })
-      } else {
-        const token = req.headers.authorization.split(' ')[1]
-        validateToken(token, req, res, next)
-      }
-    } catch (error) {
-      const httpError = createHttpError(
-        error.statusCode,
-        `[Error decoding token] - [auth]: ${error.message}`,
-      )
-      next(httpError)
+  auth: catchAsync(async (req, res, next) => {
+    if (!req.headers.authorization) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'No authorization header')
     }
-  },
+    if (validateToken(req)) next()
+  }),
 }

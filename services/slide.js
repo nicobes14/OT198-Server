@@ -15,6 +15,13 @@ module.exports = {
       throw new Error(error)
     }
   },
+  listSlideByOrder: async () => {
+    try {
+      return await Slide.findAll({ order: [['order', 'ASC']] })
+    } catch (error) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'Slides not found')
+    }
+  },
   listSlideById: async (id) => {
     try {
       const slide = await Slide.findByPk(id)

@@ -1,4 +1,6 @@
 const router = require('express').Router()
+const { auth } = require('../middlewares/auth')
+const { isAdmin } = require('../middlewares/isAdmin')
 const categorySchema = require('../schemas/category')
 const { validateSchema } = require('../middlewares/validateErrors')
 
@@ -13,12 +15,12 @@ router.get('/:id', listCategory)
 router.get('/', list)
 
 // create a new category
-router.post('/', validateSchema(categorySchema), post)
+router.post('/', auth, isAdmin, validateSchema(categorySchema), post)
 
 // delete category
-router.delete('/:id', destroy)
+router.delete('/:id', auth, isAdmin, destroy)
 
 // edit category
-router.put('/:id', validateSchema(categorySchema), update)
+router.put('/:id', auth, isAdmin, validateSchema(categorySchema), update)
 
 module.exports = router

@@ -11,8 +11,8 @@ const { auth } = require('../middlewares/auth')
 const { isAdmin } = require('../middlewares/isAdmin')
 
 router.get('/:id', listNews)
-router.post('/', validateSchema(newSchema), post)
-router.put('/:id', validateSchema(newSchema), update)
+router.post('/', auth, isAdmin, validateSchema(newSchema), post)
+router.put('/:id', auth, isAdmin, validateSchema(newSchema), update)
 router.delete('/:id', auth, isAdmin, destroy)
 
 module.exports = router

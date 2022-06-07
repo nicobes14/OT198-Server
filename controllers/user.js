@@ -31,13 +31,13 @@ module.exports = {
   },
   post: async (req, res, next) => {
     try {
-      const user = await createUser(req.body)
+      const userToken = await createUser(req.body)
       endpointResponse({
         res,
         code: 200,
         status: true,
         message: 'User created',
-        body: user,
+        body: { userToken },
       })
     } catch (error) {
       const httpError = createHttpError(

@@ -1,7 +1,11 @@
-const { catchAsync } = require('../helpers/catchAsync')
 const httpStatus = require('../helpers/httpStatus')
+const { catchAsync } = require('../helpers/catchAsync')
 const { endpointResponse } = require('../helpers/success')
-const { createTestimonial, deleteTestimonial } = require('../services/testimonial')
+const {
+  createTestimonial,
+  updateTestimonial,
+  deleteTestimonial,
+} = require('../services/testimonial')
 
 module.exports = {
   post: catchAsync(async (req, res) => {
@@ -23,6 +27,26 @@ module.exports = {
       code: httpStatus.OK,
       status: true,
       message: 'Testimonial deleted successfully',
+    })
+  }),
+  update: catchAsync(async (req, res) => {
+    const { id } = req.params
+    const { name, content, image } = req.body
+    const updatedTestimonial = await updateTestimonial(
+      {
+        id,
+        name,
+        content,
+        image,
+      },
+      req,
+    )
+    return endpointResponse({
+      res,
+      code: 200,
+      status: true,
+      message: 'Testimonial updated successfully',
+      body: updatedTestimonial,
     })
   }),
 }

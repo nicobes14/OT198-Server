@@ -2,7 +2,7 @@ const createHttpError = require('http-errors')
 const httpStatus = require('../helpers/httpStatus')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
-const { createMember } = require('../services/members')
+const { createMember, updateMember } = require('../services/members')
 
 const db = require('../database/models')
 
@@ -34,6 +34,32 @@ module.exports = {
       status: true,
       message: 'Member created successfully',
       body: member,
+    })
+  }),
+  update: catchAsync(async (req, res) => {
+    const { id } = req.params
+    const {
+      name,
+      facebookUrl,
+      instagramUrl,
+      linkedinUrl,
+      image,
+      description,
+    } = req.body
+    const memberUpdated = await updateMember({
+      name,
+      facebookUrl,
+      instagramUrl,
+      linkedinUrl,
+      image,
+      description,
+    }, id)
+    endpointResponse({
+      res,
+      code: httpStatus.OK,
+      status: true,
+      message: 'Member updated',
+      body: memberUpdated,
     })
   }),
 }

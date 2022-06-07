@@ -27,4 +27,16 @@ module.exports = {
       throw new ApiError(httpStatus.BAD_REQUEST, error.parent.code)
     }
   },
+  updateMember: async (member, id) => {
+    try {
+      const editMember = await Member.update(member, {
+        where: { id },
+      })
+      if (editMember[0] !== 1) throw new Error(`Member ${id} not found`)
+      const memberUpdated = await Member.findByPk(id)
+      return memberUpdated
+    } catch (error) {
+      throw new ApiError(httpStatus.NOT_FOUND, error.message)
+    }
+  },
 }

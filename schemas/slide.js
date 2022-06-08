@@ -9,4 +9,11 @@ module.exports = {
     body('organizationId').isInt().withMessage('must be an integer').trim()
       .optional(),
   ],
+  createSlideSchema: [
+    body('text').isString().withMessage('must be a string').trim(),
+    body('order').isInt().withMessage('must be an integer').trim()
+      .optional(),
+    body('organizationId').isInt().withMessage('must be an integer').trim()
+      .optional(),
+  ],
 }

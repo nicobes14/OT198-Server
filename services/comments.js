@@ -59,6 +59,7 @@ module.exports = {
       where: {
         newId: id,
       },
+      order: [['createdAt', 'DESC']],
       include: [
         {
           model: User,

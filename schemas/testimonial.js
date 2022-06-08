@@ -17,4 +17,12 @@ module.exports = {
       .notEmpty()
       .withMessage('required'),
   ],
+  updateTestimonialSchema: [
+    body('name').isString().withMessage('must be a string').trim()
+      .optional(),
+    body('image').isString().withMessage('must be a string').trim()
+      .optional(),
+    body('content').isString().withMessage('must be a string').trim()
+      .optional(),
+  ],
 }

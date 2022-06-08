@@ -10,13 +10,13 @@ const db = require('../database/models')
 const { Member } = db
 
 module.exports = {
-  listMembers: async () => {
-    try {
-      const allMembers = await Member.findAll()
-      return allMembers
-    } catch (error) {
-      throw new ApiError(httpStatus.NOT_FOUND, error.parent.code)
-    }
+  listMembers: async (page) => {
+    const allMembers = await Member.findAndCountAll({
+      limit: 10,
+      offset: 10 * (page - 1),
+      order: [['createdAt', 'DESC']],
+    })
+    return allMembers
   },
   createMember: async (req) => {
     try {

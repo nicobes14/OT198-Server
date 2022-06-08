@@ -1,4 +1,4 @@
-const { Comment } = require('../database/models')
+const { Comment, User, New } = require('../database/models')
 const ApiError = require('../helpers/ApiError')
 const httpStatus = require('../helpers/httpStatus')
 
@@ -15,11 +15,8 @@ module.exports = {
     }
   },
   createComments: async (body) => {
-    try {
-      const comment = await Comment.create(body)
-      return comment
-    } catch (error) {
-      throw new ApiError(httpStatus.BAD_REQUEST, error.parent.code)
-    }
+    if (!await User.findByPk(body.userId) || !await New.findByPk(body.newId)) { throw new ApiError(httpStatus.BAD_REQUEST, 'User or New not found') }
+    const comment = await Comment.create(body)
+    return comment
   },
 }

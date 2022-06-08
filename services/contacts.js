@@ -1,4 +1,5 @@
 const db = require('../database/models')
+const { sendContactEmail } = require('./sendgrid')
 
 const { Contact } = db
 
@@ -18,6 +19,7 @@ module.exports = {
   createContact: async (body) => {
     try {
       const newContact = await Contact.create(body)
+      await sendContactEmail(body.email)
       return newContact
     } catch (error) {
       throw new Error(error)

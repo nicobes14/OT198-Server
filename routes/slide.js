@@ -3,7 +3,7 @@ const express = require('express')
 const router = new express.Router()
 
 const {
-  list, listById, update, post,
+  list, listById, update, destroy, post,
 } = require('../controllers/slide')
 const { auth } = require('../middlewares/auth')
 const { isAdmin } = require('../middlewares/isAdmin')
@@ -25,5 +25,7 @@ router.put(
 )
 // create slide
 router.post('/', auth, isAdmin, uploadImage('imageURL'), validateSchema(createSlideSchema), post)
+
+router.delete('/:id', auth, isAdmin, destroy)
 
 module.exports = router

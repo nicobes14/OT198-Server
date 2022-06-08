@@ -14,4 +14,12 @@ module.exports = {
       throw new ApiError(httpStatus.NOT_FOUND, error.parent.code)
     }
   },
+  createComments: async (body) => {
+    try {
+      const comment = await Comment.create(body)
+      return comment
+    } catch (error) {
+      throw new ApiError(httpStatus.BAD_REQUEST, error.parent.code)
+    }
+  },
 }

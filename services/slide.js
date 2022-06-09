@@ -2,6 +2,7 @@ const util = require('util')
 const fs = require('fs')
 
 const unlinkFile = util.promisify(fs.unlink)
+const sequelize = require('sequelize')
 const { Slide } = require('../database/models')
 const ApiError = require('../helpers/ApiError')
 const { uploadImageToS3 } = require('./uploadImageToS3')
@@ -62,6 +63,23 @@ module.exports = {
 
     const updatedSlide = await slide.update(data)
     return updatedSlide.dataValues
+  },
+  createSlide: async (data) => {
+    try {
+      const maxOrder = await Slide.findAll({
+        attributes: [[sequelize.fn('MAX', sequelize.col('order')), 'maxOrder']],
+        raw: true,
+      })
+      if (!data.body.order) { data.body.order = maxOrder[0].maxOrder + 1 }
+      const slide = await Slide.create(data.body)
+      if (slide) {
+        slide.imageURL = await uploadImageToS3(data)
+        await slide.save()
+      }
+      return slide.dataValues
+    } catch (error) {
+      throw new ApiError(httpStatus.BAD_REQUEST, error.message)
+    }
   },
   deleteSlide: async (id) => {
     try {

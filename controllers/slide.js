@@ -2,7 +2,7 @@ const createHttpError = require('http-errors')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
 const {
-  listSlide, listSlideById, updateSlide, deleteSlide,
+  listSlide, listSlideById, updateSlide, createSlide, deleteSlide,
 } = require('../services/slide')
 const httpStatus = require('../helpers/httpStatus')
 
@@ -67,6 +67,24 @@ module.exports = {
       message: 'Slide updated',
       body: updatedSlide,
     })
+  }),
+  post: catchAsync(async (req, res, next) => {
+    try {
+      const slide = await createSlide(req)
+      endpointResponse({
+        res,
+        code: 200,
+        status: true,
+        message: 'Slide created',
+        body: slide,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error posting new slide] - [slide - POST]: ${error.message}`,
+      )
+      next(httpError)
+    }
   }),
   destroy: catchAsync(async (req, res) => {
     const { id } = req.params

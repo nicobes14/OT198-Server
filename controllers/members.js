@@ -1,7 +1,7 @@
 const httpStatus = require('../helpers/httpStatus')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
-const { listMembers, createMember } = require('../services/members')
+const { listMembers, createMember, deleteMember } = require('../services/members')
 
 module.exports = {
   list: catchAsync(async (req, res) => {
@@ -22,6 +22,17 @@ module.exports = {
       status: true,
       message: 'Member created successfully',
       body: member,
+    })
+  }),
+  destroy: catchAsync(async (req, res) => {
+    const { id } = req.params
+    const memberDeleted = await deleteMember(id)
+    endpointResponse({
+      res,
+      code: httpStatus.OK,
+      status: true,
+      message: 'Member deleted',
+      body: memberDeleted,
     })
   }),
 }

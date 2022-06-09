@@ -6,6 +6,8 @@
   },
   "private": true,
   "scripts": {
+    "migrate": "npx sequelize db:migrate",
+     "seed": "npx sequelize db:seed:all",
     "start": "node ./bin/www",
     "start:dev": "nodemon babel-node ./bin/www",
     "lint": "eslint . --ext .js",

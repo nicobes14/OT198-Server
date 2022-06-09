@@ -2,32 +2,26 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    username: process.env.DB_USERNAME,
+    username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    dialect: process.env.DB_DIALECT,
-
-    seederStorage: 'sequelize',
-    seederStorageTableName: 'seeds',
-
-    migrationStorage: 'sequelize',
-    migrationStorageTableName: 'migrations',
+    dialect: 'mysql',
+    secret: process.env.JWT_SECRET_KEY,
+    sendGridKey: process.env.SENDGRID_API_KEY,
+    sendGridMail: process.env.SENDGRID_EMAIL,
   },
 
   production: {
-    username: process.env.DB_USERNAME,
+    username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    dialect: process.env.DB_DIALECT,
-
-    seederStorage: 'sequelize',
-    seederStorageTableName: 'seeds',
-
-    migrationStorage: 'sequelize',
-    migrationStorageTableName: 'migrations',
+    dialect: 'mysql',
+    secret: process.env.JWT_SECRET_KEY,
+    sendGridKey: process.env.SENDGRID_API_KEY,
+    sendGridMail: process.env.SENDGRID_EMAIL,
   },
 };

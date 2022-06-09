@@ -26,13 +26,12 @@ module.exports = {
   }),
   destroy: catchAsync(async (req, res) => {
     const { id } = req.params
-    const memberDeleted = await deleteMember(id)
+    const status = await deleteMember(id)
     endpointResponse({
       res,
       code: httpStatus.OK,
-      status: true,
+      status,
       message: 'Member deleted',
-      body: memberDeleted,
     })
   }),
 }

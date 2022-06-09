@@ -12,6 +12,6 @@ router.get('/', auth, isAdmin, list)
 
 router.post('/', auth, uploadImage('image'), validateSchema(memberSchema), post)
 
-router.delete('/:id', destroy)
+router.delete('/:id', auth, destroy)
 
 module.exports = router

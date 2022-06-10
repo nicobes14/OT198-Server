@@ -1,4 +1,4 @@
-const { Comment } = require('../database/models')
+const { Comment, User, New } = require('../database/models')
 const ApiError = require('../helpers/ApiError')
 const httpStatus = require('../helpers/httpStatus')
 const { decodeToken } = require('../middlewares/jwt')
@@ -14,6 +14,11 @@ module.exports = {
     } catch (error) {
       throw new ApiError(httpStatus.NOT_FOUND, error.parent.code)
     }
+  },
+  createComments: async (body) => {
+    if (!await User.findByPk(body.userId) || !await New.findByPk(body.newId)) { throw new ApiError(httpStatus.BAD_REQUEST, 'User or New not found') }
+    const comment = await Comment.create(body)
+    return comment
   },
   updateComment: async (req) => {
     const comment = await Comment.findByPk(req.params.id)

@@ -7,6 +7,6 @@ const contactSchema = require('../schemas/contact')
 
 router.get('/', auth, isAdmin, list)
 
-router.post('/', auth, validateSchema(contactSchema), post)
+router.post('/', auth, isAdmin, validateSchema(contactSchema), post)
 
 module.exports = router

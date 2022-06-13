@@ -9,8 +9,8 @@ const { auth } = require('../middlewares/auth')
 router.get('/', auth, isAdmin, list)
 
 // update user
-router.put('/:id', validateSchema(userRegisterSchema), put)
+router.put('/:id', auth, isAdmin, validateSchema(userRegisterSchema), put)
 // delete user
-router.delete('/:id', destroy)
+router.delete('/:id', auth, isAdmin, destroy)
 
 module.exports = router

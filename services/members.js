@@ -35,4 +35,11 @@ module.exports = {
       throw new ApiError(httpStatus.BAD_REQUEST, error.parent.code)
     }
   },
+  deleteMember: async (id) => {
+    const deletedMember = await Member.destroy({
+      where: { id },
+    })
+    if (!deletedMember) throw new ApiError(httpStatus.NOT_FOUND, `Member with id ${id} not found`)
+    return true
+  },
 }

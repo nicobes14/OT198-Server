@@ -5,7 +5,6 @@ const { catchAsync } = require('../helpers/catchAsync')
 const { listMembers, createMember, deleteMember } = require('../services/members')
 const { calculatePagination } = require('../utils/pagination')
 
-
 module.exports = {
   list: catchAsync(async (req, res) => {
     req.query.page = req.query.page || 1

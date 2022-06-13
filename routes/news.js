@@ -12,7 +12,7 @@ const { isAdmin } = require('../middlewares/isAdmin')
 const { listNewsComments } = require('../controllers/comments')
 
 router.get('/:id', listNews)
-router.post('/', validateSchema(newSchema), post)
+router.post('/', auth, isAdmin, validateSchema(newSchema), post)
 router.put('/:id', validateSchema(newSchema), update)
 router.delete('/:id', auth, isAdmin, destroy)
 

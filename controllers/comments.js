@@ -1,5 +1,6 @@
 const { catchAsync } = require('../helpers/catchAsync')
 const { endpointResponse } = require('../helpers/success')
+const httpStatus = require('../helpers/httpStatus')
 const {
   listComments,
   listNewsCommentsService,
@@ -12,7 +13,7 @@ module.exports = {
     const comments = await listComments()
     endpointResponse({
       res,
-      code: 200,
+      code: httpStatus.OK,
       status: true,
       message: 'Comments listed',
       body: comments,
@@ -44,7 +45,7 @@ module.exports = {
     const updatedComment = await updateComment(req)
     endpointResponse({
       res,
-      code: 200,
+      code: httpStatus.OK,
       status: true,
       message: 'Comment updated',
       body: updatedComment,

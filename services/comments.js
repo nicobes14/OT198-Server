@@ -5,15 +5,11 @@ const { decodeToken } = require('../middlewares/jwt')
 
 module.exports = {
   listComments: async () => {
-    try {
-      const comments = await Comment.findAll({
-        attributes: ['body'],
-        order: [['createdAt', 'DESC']],
-      })
-      return comments
-    } catch (error) {
-      throw new ApiError(httpStatus.NOT_FOUND, error.parent.code)
-    }
+    const comments = await Comment.findAll({
+      attributes: ['body'],
+      order: [['createdAt', 'DESC']],
+    })
+    return comments
   },
   /**
    * @param {number} id the id of the new
@@ -87,7 +83,6 @@ module.exports = {
     if (user.roleId !== 1 && user.id !== comment.userId) {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized')
     }
-
     comment.body = req.body.body
     await comment.save()
     return comment

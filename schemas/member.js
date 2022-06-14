@@ -21,4 +21,26 @@ const memberSchema = [
     .withMessage('required'),
 ]
 
-module.exports = memberSchema
+const updateMemberSchema = [
+  body('name')
+    .isString()
+    .trim()
+    .withMessage('name has to be a string')
+    .notEmpty()
+    .withMessage('Name is required'),
+  body('image')
+    .isString()
+    .withMessage('Image must be a string')
+    .trim()
+    .notEmpty()
+    .withMessage('required')
+    .optional(),
+  body('description')
+    .isString()
+    .withMessage('Description must be a string')
+    .trim()
+    .notEmpty()
+    .withMessage('required'),
+]
+
+module.exports = { memberSchema, updateMemberSchema }

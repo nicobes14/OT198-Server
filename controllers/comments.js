@@ -6,6 +6,7 @@ const {
   listNewsCommentsService,
   updateComment,
   createComments,
+  deleteComment,
 } = require('../services/comments')
 
 module.exports = {
@@ -49,6 +50,16 @@ module.exports = {
       status: true,
       message: 'Comment updated',
       body: updatedComment,
+    })
+  }),
+  destroy: catchAsync(async (req, res) => {
+    const { id } = req.params
+    await deleteComment(id, req)
+    return endpointResponse({
+      res,
+      code: 200,
+      status: true,
+      message: 'Comment deleted',
     })
   }),
 }

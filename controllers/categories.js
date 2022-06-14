@@ -1,5 +1,6 @@
 const { catchAsync } = require('../helpers/catchAsync')
 const { endpointResponse } = require('../helpers/success')
+const { calculatePagination } = require('../utils/pagination')
 const {
   listCategories,
   listCategoryById,
@@ -11,13 +12,18 @@ const httpStatus = require('../helpers/httpStatus')
 
 module.exports = {
   list: catchAsync(async (req, res) => {
-    const categories = await listCategories()
+    const resource = req.baseUrl
+    req.query.page = req.query.page || 1
+    const categories = await listCategories(req.query.page)
     endpointResponse({
       res,
       code: httpStatus.OK,
       status: true,
-      message: 'Categories found',
-      body: categories,
+      message: 'Categories successfully retrieved',
+      body: {
+        ...calculatePagination(req.query.page, categories.count, resource),
+        categories: categories.rows,
+      },
     })
   }),
   listCategory: catchAsync(async (req, res) => {

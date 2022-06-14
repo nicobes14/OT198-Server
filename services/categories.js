@@ -3,8 +3,13 @@ const ApiError = require('../helpers/ApiError')
 const httpStatus = require('../helpers/httpStatus')
 
 module.exports = {
-  listCategories: async () => {
-    const categories = await Category.findAll({ attributes: ['name'] })
+  listCategories: async (page) => {
+    const categories = await Category.findAndCountAll({
+      attributes: ['name'],
+      limit: 10,
+      offset: 10 * (page - 1),
+      order: [['createdAt', 'DESC']],
+    })
     return categories
   },
   listCategoryById: async (id) => {

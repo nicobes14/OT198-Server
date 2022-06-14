@@ -8,10 +8,11 @@ const errorConverter = (err, req, res, next) => {
     let message
     if (process.env.NODE_ENV === 'development') {
       message = error.message || 'Internal server error'
+    } else if (error.parent.code) {
+      message = error.parent.code
     } else {
       message = error.statusCode === httpStatus.NOT_FOUND ? 'Not Found' : 'Internal server error'
     }
-
     error = new ApiError(statusCode, message, false)
   }
   next(error)

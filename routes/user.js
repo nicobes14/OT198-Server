@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { userRegisterSchema } = require('../schemas/user')
 const { validateSchema } = require('../middlewares/validateErrors')
-const { destroy, put, list } = require('../controllers/user')
+const { destroy, update, list } = require('../controllers/user')
 const { isAdmin } = require('../middlewares/isAdmin')
 const { auth } = require('../middlewares/auth')
 
@@ -9,8 +9,8 @@ const { auth } = require('../middlewares/auth')
 router.get('/', auth, isAdmin, list)
 
 // update user
-router.put('/:id', validateSchema(userRegisterSchema), put)
+router.put('/:id', auth, isAdmin, validateSchema(userRegisterSchema), update)
 // delete user
-router.delete('/:id', destroy)
+router.delete('/:id', auth, isAdmin, destroy)
 
 module.exports = router

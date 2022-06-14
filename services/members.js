@@ -10,13 +10,13 @@ const db = require('../database/models')
 const { Member } = db
 
 module.exports = {
-  listMembers: async () => {
-    try {
-      const allMembers = await Member.findAll()
-      return allMembers
-    } catch (error) {
-      throw new ApiError(httpStatus.NOT_FOUND, error.parent.code)
-    }
+  listMembers: async (page) => {
+    const allMembers = await Member.findAndCountAll({
+      limit: 10,
+      offset: 10 * (page - 1),
+      order: [['createdAt', 'DESC']],
+    })
+    return allMembers
   },
   createMember: async (req) => {
     try {
@@ -33,6 +33,32 @@ module.exports = {
         await unlinkFile(req.file.path)
       }
       throw new ApiError(httpStatus.BAD_REQUEST, error.parent.code)
+    }
+  },
+  deleteMember: async (id) => {
+    const deletedMember = await Member.destroy({
+      where: { id },
+    })
+    if (!deletedMember) throw new ApiError(httpStatus.NOT_FOUND, `Member with id ${id} not found`)
+    return true
+  },
+  updateMember: async (req, id) => {
+    try {
+      const editMember = await Member.update(req.body, {
+        where: { id },
+      })
+      if (editMember[0] !== 1) throw new Error(`Member ${id} not found`)
+      const memberUpdated = await Member.findByPk(id)
+      if (req.file) {
+        memberUpdated.image = await uploadImageToS3(req)
+        await memberUpdated.save()
+      }
+      return memberUpdated
+    } catch (error) {
+      if (req.file) {
+        await unlinkFile(req.file.path)
+      }
+      throw new ApiError(httpStatus.NOT_FOUND, error.message)
     }
   },
 }

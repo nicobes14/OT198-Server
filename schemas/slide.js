@@ -4,16 +4,26 @@ module.exports = {
   updateSlideSchema: [
     body('text').isString().withMessage('must be a string').trim()
       .optional(),
-    body('order').isInt().withMessage('must be an integer').trim()
+    body('order').toInt().isInt({ min: 1 }).withMessage('must be an interger')
+      .trim()
       .optional(),
-    body('organizationId').isInt().withMessage('must be an integer').trim()
+    body('organizationId')
+      .toInt()
+      .isInt({ min: 1 })
+      .withMessage('must be an interger')
+      .trim()
       .optional(),
   ],
   createSlideSchema: [
     body('text').isString().withMessage('must be a string').trim(),
-    body('order').isInt().withMessage('must be an integer').trim()
+    body('order').toInt().isInt({ min: 1 }).withMessage('must be an interger')
+      .trim()
       .optional(),
-    body('organizationId').isInt().withMessage('must be an integer').trim()
+    body('organizationId')
+      .toInt()
+      .isInt({ min: 1 })
+      .withMessage('must be an interger')
+      .trim()
       .optional(),
   ],
 }

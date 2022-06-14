@@ -5,16 +5,21 @@ module.exports = {
     body('firstName')
       .isString()
       .trim()
-      .withMessage('firstName has to be a string')
+      .withMessage('must be a string')
       .notEmpty()
-      .withMessage('firstName is required'),
+      .withMessage('required'),
     body('lastName')
       .isString()
       .trim()
-      .withMessage('lastName has to be a string')
+      .withMessage('must be a string')
       .notEmpty()
-      .withMessage('lastName is required'),
-    body('email').isEmail().trim().withMessage('enter a valid email'),
+      .withMessage('required'),
+    body('email')
+      .isEmail()
+      .trim()
+      .withMessage('enter a valid email')
+      .notEmpty()
+      .withMessage('required'),
     body('password')
       .isLength({ min: 8 })
       .trim()
@@ -23,7 +28,12 @@ module.exports = {
       .withMessage('Must have at least 1 uppercase, 1 lowercase letter and 1 number'),
   ],
   userLoginSchema: [
-    body('email').isEmail().trim().withMessage('enter a valid email'),
+    body('email')
+      .isEmail()
+      .trim()
+      .withMessage('enter a valid email')
+      .notEmpty()
+      .withMessage('required'),
     body('password')
       .isLength({ min: 8 })
       .trim()

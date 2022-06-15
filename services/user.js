@@ -4,6 +4,7 @@ const { sendWelcomeEmail } = require('./sendgrid')
 const ApiError = require('../helpers/ApiError')
 const { generateToken } = require('../middlewares/jwt')
 const httpStatus = require('../helpers/httpStatus')
+const Roles = require('../constants/roles')
 
 module.exports = {
   createUser: async (data) => {
@@ -17,6 +18,7 @@ module.exports = {
         lastName,
         email,
         password: bcrypt.hashSync(password, 12),
+        roleId: Roles.STANDARD,
       },
     })
     if (!created) throw new ApiError(httpStatus.CONFLICT, 'Email already exists')

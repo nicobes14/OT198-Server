@@ -1,5 +1,5 @@
 'use strict';
-const bcrypt = require('bcrypt');
+const Roles = require('../../constants/roles')
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,7 +10,7 @@ module.exports = {
         email:"ncrook0@yolasite.com", 
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi", 
         photo:"http://dummyimage.com/196x100.png/ff4444/ffffff", 
-        roleId:1, 
+        roleId:Roles.ADMIN, 
         createdAt:new Date(), 
         updatedAt:new Date()
       },
@@ -20,7 +20,7 @@ module.exports = {
         email:"mlabern1@army.mil",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/213x100.png/cc0000/ffffff",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -30,7 +30,7 @@ module.exports = {
         email:"uatterbury2@eepurl.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/223x100.png/5fa2dd/ffffff",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -40,7 +40,7 @@ module.exports = {
         email:"jlabrom3@tumblr.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/205x100.png/cc0000/ffffff",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -50,7 +50,7 @@ module.exports = {
         email:"ameeks4@gizmodo.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/103x100.png/dddddd/000000",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -60,7 +60,7 @@ module.exports = {
         email:"agibling5@about.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/208x100.png/cc0000/ffffff",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -70,7 +70,7 @@ module.exports = {
         email:"mbauldrey6@mayoclinic.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/207x100.png/ff4444/ffffff",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -80,7 +80,7 @@ module.exports = {
         email:"ceye7@omniture.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/207x100.png/cc0000/ffffff",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -90,7 +90,7 @@ module.exports = {
         email:"cdevennie8@hugedomains.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/131x100.png/5fa2dd/ffffff",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -100,7 +100,7 @@ module.exports = {
         email:"kblanchflower9@spiegel.de",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/167x100.png/dddddd/000000",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -110,7 +110,7 @@ module.exports = {
         email:"fguidonia@archive.org",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/208x100.png/ff4444/ffffff",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -120,7 +120,7 @@ module.exports = {
         email:"jstillertb@eventbrite.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/133x100.png/ff4444/ffffff",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -130,7 +130,7 @@ module.exports = {
         email:"abonsulc@mac.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/113x100.png/dddddd/000000",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -140,7 +140,7 @@ module.exports = {
         email:"etookd@youtu.be",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/158x100.png/dddddd/000000",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -150,7 +150,7 @@ module.exports = {
         email:"jpartingtone@washington.edu",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/125x100.png/ff4444/ffffff",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -160,7 +160,7 @@ module.exports = {
         email:"estichelf@dagondesign.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/166x100.png/5fa2dd/ffffff",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -170,7 +170,7 @@ module.exports = {
         email:"jgettinsg@epa.gov",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/227x100.png/cc0000/ffffff",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -180,7 +180,7 @@ module.exports = {
         email:"sphillpoth@reverbnation.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/144x100.png/dddddd/000000",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -190,7 +190,7 @@ module.exports = {
         email:"fhorwelli@oracle.com",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/151x100.png/cc0000/ffffff",
-        roleId:1,
+        roleId:Roles.ADMIN,
         createdAt:new Date(),
         updatedAt:new Date()
       },
@@ -200,7 +200,7 @@ module.exports = {
         email:"rwraggsj@state.tx.us",
         password:"$2b$12$MoOasB90mwaKwp5xkbGYauyIPfWh7oBZrYmCDaSG3o.LU.o4vQMZi",
         photo:"http://dummyimage.com/193x100.png/cc0000/ffffff",
-        roleId:2,
+        roleId:Roles.STANDARD,
         createdAt:new Date(),
         updatedAt:new Date()
       }], {});

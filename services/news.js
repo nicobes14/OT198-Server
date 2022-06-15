@@ -3,6 +3,14 @@ const ApiError = require('../helpers/ApiError')
 const httpStatus = require('../helpers/httpStatus')
 
 module.exports = {
+  listNews: async (page) => {
+    const allNews = await New.findAndCountAll({
+      limit: 10,
+      offset: 10 * (page - 1),
+      order: [['createdAt', 'DESC']],
+    })
+    return allNews
+  },
   getNewById: async (id) => {
     const result = await New.findByPk(id)
     if (!result) throw new ApiError(httpStatus.NOT_FOUND, 'New not found')

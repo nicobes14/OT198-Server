@@ -2,12 +2,29 @@ const httpStatus = require('../helpers/httpStatus')
 const { catchAsync } = require('../helpers/catchAsync')
 const { endpointResponse } = require('../helpers/success')
 const {
+  listTestimonial,
   createTestimonial,
   updateTestimonial,
   deleteTestimonial,
 } = require('../services/testimonial')
+const { calculatePagination } = require('../utils/pagination')
 
 module.exports = {
+  list: catchAsync(async (req, res) => {
+    const resource = req.baseUrl
+    req.query.page = req.query.page || 1
+    const testimonials = await listTestimonial(req.query.page)
+    return endpointResponse({
+      res,
+      code: httpStatus.OK,
+      status: true,
+      message: 'Testimonials found',
+      body: {
+        ...calculatePagination(req.query.page, testimonials.count, resource),
+        testimonials: testimonials.rows,
+      },
+    })
+  }),
   post: catchAsync(async (req, res) => {
     const testimonialCreated = await createTestimonial(req)
     return endpointResponse({

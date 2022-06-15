@@ -3,8 +3,12 @@ const { createTestimonialSchema, updateTestimonialSchema } = require('../schemas
 const { validateSchema } = require('../middlewares/validateErrors')
 const { auth } = require('../middlewares/auth')
 const { isAdmin } = require('../middlewares/isAdmin')
-const { post, destroy, update } = require('../controllers/testimonial')
+const {
+  list, post, destroy, update,
+} = require('../controllers/testimonial')
 const { uploadImage } = require('../middlewares/uploadImage')
+
+router.get('/', auth, list)
 
 router.post('/', auth, isAdmin, validateSchema(createTestimonialSchema), post)
 

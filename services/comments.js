@@ -1,8 +1,6 @@
 const { Comment, User, New } = require('../database/models')
 const ApiError = require('../helpers/ApiError')
 const httpStatus = require('../helpers/httpStatus')
-const { decodeToken } = require('../middlewares/jwt')
-const Roles = require('../constants/roles')
 
 module.exports = {
   listComments: async () => {
@@ -76,27 +74,19 @@ module.exports = {
   },
   updateComment: async (req) => {
     const comment = await Comment.findByPk(req.params.id)
-    const user = decodeToken(req)
     if (!comment) {
       throw new ApiError(httpStatus.NOT_FOUND, 'Comment not found')
-    }
-    if (user.roleId !== Roles.ADMIN && user.id !== comment.userId) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized')
     }
     comment.body = req.body.body
     await comment.save()
     return comment
   },
-  deleteComment: async (id, req) => {
+  deleteComment: async (id) => {
     const comment = await Comment.findByPk(id)
     if (!comment) {
       throw new ApiError(httpStatus.NOT_FOUND, 'Comment not found')
     }
-    const user = decodeToken(req)
-    if (user.roleId === Roles.ADMIN || user.id === comment.userId) {
-      await comment.destroy()
-      return true
-    }
-    throw new ApiError(httpStatus.FORBIDDEN, 'You are not allowed to do this')
+    await comment.destroy()
+    return true
   },
 }

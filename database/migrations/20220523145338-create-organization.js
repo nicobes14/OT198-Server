@@ -22,7 +22,7 @@ module.exports = {
       },
       phone: {
         allowNull: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       email: {
         allowNull: false,

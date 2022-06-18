@@ -3,7 +3,7 @@ const express = require('express')
 const router = new express.Router()
 
 const { validateSchema } = require('../middlewares/validateErrors')
-const newSchema = require('../schemas/new')
+const { newSchema } = require('../schemas/new')
 const {
   post, listNew, update, destroy, list,
 } = require('../controllers/news')

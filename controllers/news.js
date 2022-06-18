@@ -18,7 +18,7 @@ module.exports = {
       message: 'successfully retrieved',
       body: {
         ...calculatePagination(req.query.page, news.count, resource),
-        members: news.rows,
+        news: news.rows,
       },
     })
   }),

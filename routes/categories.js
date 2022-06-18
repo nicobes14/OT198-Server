@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { auth } = require('../middlewares/auth')
 const { isAdmin } = require('../middlewares/isAdmin')
-const categorySchema = require('../schemas/category')
+const { categorySchema } = require('../schemas/category')
 const { validateSchema } = require('../middlewares/validateErrors')
 
 const {

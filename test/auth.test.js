@@ -3,11 +3,20 @@ const { expect } = require('chai')
 const app = require('../app')
 const { User } = require('../database/models')
 
+const newUser = {
+  firstName: 'Test',
+  lastName: 'User',
+  email: 'testUser.email@test.com',
+  password: 'testPassword123',
+}
+
+var token
+
 describe('Auth', () => {
   after( async () => {
     // Delete the user that was created
     const result = await User.destroy({
-      where: { email: 'testUser.email@test.com' },
+      where: { email: newUser.email },
       force: true
     });
     return result
@@ -16,12 +25,7 @@ describe('Auth', () => {
     it('should create a new user', (done) => {
       request(app)
       .post('/auth/register')
-      .send({
-        firstName: 'Test',
-        lastName: 'User',
-        email: 'testUser.email@test.com',
-        password: 'testPassword123',
-      })
+      .send(newUser)
       .end((err,res) => {
         expect(res).to.have.property('status', 201)
         expect(res.body).to.have.property('message', 'User created')
@@ -50,12 +54,7 @@ describe('Auth', () => {
     it('should return a 409 error', (done) => {
       request(app)
       .post('/auth/register')
-      .send({
-        firstName: 'Test',
-        lastName: 'User',
-        email: 'testUser.email@test.com',
-        password: 'testPassword123',
-      })
+      .send(newUser)
       .end((err, res) => {
         expect(res).to.have.property('status', 409)
         expect(res.body).to.have.property('message', 'Email already exists')
@@ -69,13 +68,14 @@ describe('Auth', () => {
       request(app)
       .post('/auth/login')
       .send({
-        email: 'testUser.email@test.com',
-        password: 'testPassword123'
+        email: newUser.email,
+        password: newUser.password
       })
       .end((err, res) => {
         expect(res).to.have.property('status', 200)
         expect(res.body).to.have.property('message', 'User logged in')
-        expect(res.body.body).to.have.keys('user','token')
+        expect(res.body.body).to.have.keys('user', 'token')
+        token = res.body.body.token
         done()
       })
     })
@@ -87,7 +87,7 @@ describe('Auth', () => {
       request(app)
       .post('/auth/login')
       .send({
-        email: 'testUser.email@test.com',
+        email: newUser.email,
         password: 'testWrongPassword'
       })
       .end((err, res) => {
@@ -95,6 +95,36 @@ describe('Auth', () => {
         expect(res.body).to.have.property('message', 'Invalid credentials')
         done()
       })
+    })
+  })
+
+  describe('GET /auth/me', () => {
+    it('should return a user', (done) => {
+      request(app)
+        .get('/auth/me')
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          expect(res).to.have.property('status', 200)
+          expect(res.body).to.have.property('message', 'User retrieved successfully')
+          expect(res.body.body).to.have.property('id')
+          expect(res.body.body).to.have.property('firstName', newUser.firstName)
+          expect(res.body.body).to.have.property('lastName', newUser.lastName)
+          expect(res.body.body).to.have.property('email', newUser.email)
+          done()
+        })
+    })
+  })
+
+  // Test GET /auth/me without token
+  describe('GET /auth/me without headers', () => {
+    it('should return 401 error', (done) => {
+      request(app)
+        .get('/auth/me')
+        .end((err, res) => {
+          expect(res).to.have.property('status', 401)
+          expect(res.body).to.have.property('message', 'No authorization header')
+          done()
+        })
     })
   })
 })

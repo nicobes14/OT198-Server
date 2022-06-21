@@ -20,12 +20,6 @@ module.exports = {
       .trim()
       .notEmpty()
       .withMessage('required'),
-    body('type')
-      .isString()
-      .withMessage('must be a string')
-      .trim()
-      .notEmpty()
-      .withMessage('required'),
     body('categoryId')
       .toInt()
       .isInt({ min: 1 })

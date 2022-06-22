@@ -39,7 +39,7 @@ module.exports = {
     const deletedMember = await Member.destroy({
       where: { id },
     })
-    if (!deletedMember) throw new ApiError(httpStatus.NOT_FOUND, `Member with id ${id} not found`)
+    if (!deletedMember) throw new ApiError(httpStatus.NOT_FOUND, 'Member not found')
     return true
   },
   updateMember: async (req, id) => {

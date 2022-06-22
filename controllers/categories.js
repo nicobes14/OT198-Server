@@ -38,8 +38,7 @@ module.exports = {
     })
   }),
   update: catchAsync(async (req, res) => {
-    const { name, description, image } = req.body
-    const updatedCategory = await updateCategory({ name, description, image }, req.params.id)
+    const updatedCategory = await updateCategory(req.params.id, req)
     endpointResponse({
       res,
       code: httpStatus.OK,
@@ -48,8 +47,7 @@ module.exports = {
     })
   }),
   post: catchAsync(async (req, res) => {
-    const { name, description, image } = req.body
-    const category = await createCategory({ name, description, image })
+    const category = await createCategory(req)
     endpointResponse({
       res,
       code: httpStatus.CREATED,

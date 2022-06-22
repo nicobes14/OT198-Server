@@ -3,6 +3,7 @@ const { auth } = require('../middlewares/auth')
 const { isAdmin } = require('../middlewares/isAdmin')
 const { categorySchema } = require('../schemas/category')
 const { validateSchema } = require('../middlewares/validateErrors')
+const { uploadImage } = require('../middlewares/uploadImage')
 
 const {
   list, listCategory, update, post, destroy,
@@ -167,7 +168,7 @@ router.get('/', list)
  *       500:
  *         description: Error response - Internal server error.
  */
-router.post('/', auth, isAdmin, validateSchema(categorySchema), post)
+router.post('/', auth, isAdmin, uploadImage('image'), validateSchema(categorySchema), post)
 
 // delete category
 /**
@@ -263,6 +264,6 @@ router.delete('/:id', auth, isAdmin, destroy)
  *       500:
  *         description: Error response - Internal server error.
  */
-router.put('/:id', auth, isAdmin, validateSchema(categorySchema), update)
+router.put('/:id', auth, isAdmin, uploadImage('image'), validateSchema(categorySchema), update)
 
 module.exports = router

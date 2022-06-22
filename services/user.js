@@ -47,7 +47,7 @@ module.exports = {
     if (!userExist) {
       throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
     }
-    const result = await User.update(
+    await User.update(
       {
         firstName,
         lastName,
@@ -58,7 +58,8 @@ module.exports = {
         where: { id: idUser },
       },
     )
-    return result
+    const updatedUser = await User.findOne({ where: { id: idUser } })
+    return updatedUser
   },
   deleteUser: async (id) => {
     const user = await User.destroy({

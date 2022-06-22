@@ -1,6 +1,4 @@
 const express = require('express')
-const { get } = require('../controllers/index')
-const pingRouter = require('./ping')
 const categoriesRouter = require('./categories')
 const newsRouter = require('./news')
 const organizationRouter = require('./organization')
@@ -16,12 +14,7 @@ const swaggerRouter = require('./swagger')
 
 const router = express.Router()
 
-// Middlewares
-const { auth } = require('../middlewares/auth')
-
-router.get('/', get)
 // example of a route with index controller get function
-router.use('/ping', auth, pingRouter)
 
 // categories routes
 router.use('/categories', categoriesRouter)

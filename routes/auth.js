@@ -35,29 +35,27 @@ const { auth } = require('../middlewares/auth')
  *   - Auth
  *   summary: Register a new user
  *   description: Register a new user
- *   parameters:
- *    - name: body
- *      in: body
- *      description: User data
+ *   requestBody:
  *      required: true
- *      schema:
- *       type: object
- *       required:
- *        - firstName
- *        - lastName
- *        - email
- *        - password
- *       properties:
- *        firstName:
- *         type: string
- *        lastName:
- *         type: string
- *        email:
- *         type: string
- *         format: email
- *        password:
- *         type: string
- *         format: password
+ *      content:
+ *       application/json:
+ *        schema:
+ *         type: object
+ *         properties:
+ *          firstName:
+ *           type: string
+ *           required: true
+ *          lastName:
+ *           type: string
+ *           required: true
+ *          email:
+ *           type: string
+ *           required: true
+ *           format: email
+ *          password:
+ *           type: string
+ *           required: true
+ *           format: password
  *   responses:
  *     '200':
  *      description: User created
@@ -92,11 +90,10 @@ router.post('/register', validateSchema(userRegisterSchema), post)
  *   - Auth
  *   summary: Login a user
  *   description: Login a user
- *   parameters:
- *    - name: body
- *      in: body
- *      description: User data
- *      required: true
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
  *      schema:
  *       type: object
  *       required:

@@ -3,7 +3,7 @@ const express = require('express')
 const router = new express.Router()
 
 const { validateSchema } = require('../middlewares/validateErrors')
-const { newSchema } = require('../schemas/new')
+const { newSchema, updateNewSchema } = require('../schemas/new')
 const {
   post, listNew, update, destroy, list,
 } = require('../controllers/news')
@@ -59,11 +59,11 @@ const { uploadImage } = require('../middlewares/uploadImage')
 
 // Define news tags
 /**
-* @swagger
-* tags:
-*   name: News
-*   description: The news API
-*/
+ * @swagger
+ * tags:
+ *   name: News
+ *   description: The news API
+ */
 
 // list all News
 /**
@@ -207,7 +207,7 @@ router.post('/', auth, isAdmin, uploadImage('image'), validateSchema(newSchema),
  *           name:
  *            type: string
  *            required: true
- *           description:
+ *           content:
  *            type: string
  *            required: false
  *           image:
@@ -246,7 +246,7 @@ router.post('/', auth, isAdmin, uploadImage('image'), validateSchema(newSchema),
  *                 body:
  *                   $ref: '#/components/schemas/News'
  */
-router.put('/:id', auth, isAdmin, uploadImage('image'), validateSchema(newSchema), update)
+router.put('/:id', auth, isAdmin, uploadImage('image'), validateSchema(updateNewSchema), update)
 /**
  * @swagger
  * /news/{id}:

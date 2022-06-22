@@ -24,7 +24,7 @@ module.exports = {
     if (editCategory[0] !== 1) {
       throw new ApiError(httpStatus.NOT_FOUND, `Category with id ${id} not found`)
     }
-    const updatedCategory = this.listCategoryById(id)
+    const updatedCategory = await Category.findByPk(id)
     return updatedCategory
   },
   createCategory: async (category) => {

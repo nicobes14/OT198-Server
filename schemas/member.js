@@ -8,6 +8,15 @@ module.exports = {
       .withMessage('must be a string')
       .notEmpty()
       .withMessage('required'),
+    body('facebookUrl').isString().trim().withMessage('must be a string')
+      .notEmpty()
+      .optional(),
+    body('instagramUrl').isString().trim().withMessage('must be a string')
+      .notEmpty()
+      .optional(),
+    body('linkedinUrl').isString().trim().withMessage('must be a string')
+      .notEmpty()
+      .optional(),
     body('image')
       .isString()
       .withMessage('must be a string')
@@ -27,7 +36,17 @@ module.exports = {
       .trim()
       .withMessage('must be a string')
       .notEmpty()
-      .withMessage('required'),
+      .withMessage('required')
+      .optional(),
+    body('facebookUrl').isString().trim().withMessage('must be a string')
+      .notEmpty()
+      .optional(),
+    body('instagramUrl').isString().trim().withMessage('must be a string')
+      .notEmpty()
+      .optional(),
+    body('linkedinUrl').isString().trim().withMessage('must be a string')
+      .notEmpty()
+      .optional(),
     body('image')
       .isString()
       .withMessage('must be a string')
@@ -40,6 +59,7 @@ module.exports = {
       .withMessage('must be a string')
       .trim()
       .notEmpty()
-      .withMessage('required'),
+      .withMessage('required')
+      .optional(),
   ],
 }

@@ -18,7 +18,7 @@ module.exports = {
       message: 'successfully retrieved',
       body: {
         ...calculatePagination(req.query.page, news.count, resource),
-        members: news.rows,
+        news: news.rows,
       },
     })
   }),
@@ -34,7 +34,7 @@ module.exports = {
     })
   }),
   post: catchAsync(async (req, res) => {
-    const createdNew = await createNew(req.body)
+    const createdNew = await createNew(req)
     endpointResponse({
       res,
       code: httpStatus.CREATED,
@@ -44,10 +44,7 @@ module.exports = {
     })
   }),
   update: catchAsync(async (req, res) => {
-    const { id } = req.params
-    const data = req.body
-
-    const updatedNew = await updateNew(id, data)
+    const updatedNew = await updateNew(req)
     endpointResponse({
       res,
       code: httpStatus.OK,

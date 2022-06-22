@@ -1,3 +1,8 @@
+const util = require('util')
+const fs = require('fs')
+
+const unlinkFile = util.promisify(fs.unlink)
+const { uploadImageToS3 } = require('./uploadImageToS3')
 const { New } = require('../database/models')
 const ApiError = require('../helpers/ApiError')
 const httpStatus = require('../helpers/httpStatus')
@@ -16,30 +21,41 @@ module.exports = {
     if (!result) throw new ApiError(httpStatus.NOT_FOUND, 'New not found')
     return result
   },
-  createNew: async (body) => {
-    body.type = 'news'
-    const newCategory = await New.create(body)
-    return newCategory
+  createNew: async (req) => {
+    try {
+      req.body.type = 'news'
+      const newNew = await New.create(req.body)
+      if (newNew && req.file) {
+        newNew.image = await uploadImageToS3(req)
+        await newNew.save()
+      }
+      return newNew
+    } catch (error) {
+      if (req.file) {
+        await unlinkFile(req.file.path)
+      }
+      throw new ApiError(httpStatus.BAD_REQUEST, error.parent.code)
+    }
   },
-  updateNew: async (idNew, data) => {
-    const {
-      name, content, image, type, categoryId,
-    } = data
-    const modifyNew = await New.update(
-      {
-        name,
-        content,
-        image,
-        type,
-        categoryId,
-      },
-      {
-        where: { id: idNew },
-      },
-    )
-    if (modifyNew !== 1) throw new ApiError(httpStatus.NOT_FOUND, `New ${idNew} not found`)
-    const updatedNew = await this.getNewById(idNew)
-    return updatedNew
+  updateNew: async (req) => {
+    const { id } = req.params
+    try {
+      const editedNew = await New.update(req.body, {
+        where: { id },
+      })
+      if (editedNew[0] !== 1) throw new Error(`New ${id} not found`)
+      const updatedNew = await New.findByPk(id)
+      if (req.file) {
+        updatedNew.image = await uploadImageToS3(req)
+        await updatedNew.save()
+      }
+      return updatedNew
+    } catch (error) {
+      if (req.file) {
+        await unlinkFile(req.file.path)
+      }
+      throw new ApiError(httpStatus.NOT_FOUND, error.message)
+    }
   },
   deleteNew: async (idNew) => {
     const deletedNew = await New.destroy({

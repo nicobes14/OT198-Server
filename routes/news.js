@@ -282,7 +282,7 @@ router.delete('/:id', auth, isAdmin, destroy)
 // get news comments
 /**
  * @swagger
- * /{id}/comments:
+ * /news/{id}/comments:
  *   get:
  *     tags: [News]
  *     summary: show the specific comments

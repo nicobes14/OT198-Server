@@ -1,4 +1,4 @@
-exports.html = (title, emailText, contactInfo) => `<!doctype html>
+exports.html = (dataOrg) => `<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -266,7 +266,7 @@ exports.html = (title, emailText, contactInfo) => `<!doctype html>
                             <td style="width:312px;">
 
                               <img height="auto"
-                                src="https://s3-eu-west-1.amazonaws.com/topolio/uploads/6082338c1a7ee/1619145692.jpg"
+                                src="${dataOrg.image}"
                                 style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
                                 width="312">
 
@@ -298,9 +298,9 @@ exports.html = (title, emailText, contactInfo) => `<!doctype html>
                       <div
                         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;">
                         <p style="text-align: center;"><span
-                            style="font-size: 24px;"><strong>${title}</strong></span></p>
+                            style="font-size: 24px;"><strong>${dataOrg.welcomeText}</strong></span></p>
                         <p style="text-align: center;">&nbsp;</p>
-                        <p style="text-align: center;"><span style="font-size: 16px;">${emailText}</span></p>
+                        <p style="text-align: center;"><span style="font-size: 16px;">${dataOrg.aboutUsText}</span></p>
                       </div>
 
                     </td>
@@ -325,7 +325,12 @@ exports.html = (title, emailText, contactInfo) => `<!doctype html>
 
                       <div
                         style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;">
-                        <p style="text-align: center;">${contactInfo}</p>
+                        <p style="text-align: center;">Tel: ${dataOrg.phone}</p>
+                        <p style="text-align: center;">${dataOrg.address}</p>
+                        <p style="text-align: center;">${dataOrg.email}</p>
+                        <p style="text-align: center;">${dataOrg.facebookUrl}</p>
+                        <p style="text-align: center;">${dataOrg.instagramUrl}</p>
+                        <p style="text-align: center;">${dataOrg.linkedinUrl}</p>
                       </div>
 
                     </td>

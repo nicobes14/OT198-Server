@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const { Organization } = require('../database/models')
 const ApiError = require('../helpers/ApiError')
 const httpStatus = require('../helpers/httpStatus')
@@ -18,11 +19,11 @@ module.exports = {
     return allOrganizations
   },
 
-  updateOrganization: async (id, newData) => {
-    const updatedData = await Organization.update(newData, { where: { id: `${id}` } })
+  updateOrganization: async (newData) => {
+    const updatedData = await Organization.update(newData, { where: { id: { [Op.gte]: 1 } } })
     const [result] = updatedData
-    if (result !== 1) throw new ApiError(httpStatus.NOT_FOUND, 'Organization not found')
-    const updatedOrganization = await Organization.findByPk(id)
+    if (result === 0) throw new ApiError(httpStatus.NOT_FOUND, 'Organization not found')
+    const updatedOrganization = await Organization.findAll()
     return updatedOrganization
   },
 }

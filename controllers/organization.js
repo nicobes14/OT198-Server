@@ -18,7 +18,7 @@ module.exports = {
     })
   }),
   update: catchAsync(async (req, res) => {
-    const updatedOrganization = await updateOrganization(1, req.body)
+    const updatedOrganization = await updateOrganization(req.body)
     endpointResponse({
       res,
       code: httpStatus.OK,

@@ -1,7 +1,7 @@
 const port = process.env.PORT || 3000
 
-const baseURL = process.env.BASE_URL
-  ? `${process.env.BASE_URL}`
+const baseURL = process.env.APP_URL_PRODUCTION
+  ? `${process.env.APP_URL_PRODUCTION}`
   : `http://localhost:${port}`
 
 const stringPage = '?page='
